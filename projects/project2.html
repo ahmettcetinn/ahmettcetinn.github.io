@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock-Paper-Scissors</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: #111;
+            color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .game-container {
+            background: #1a1a1a;
+            padding: 30px;
+            border-radius: 8px;
+            width: 400px;
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            font-size: 2rem;
+            border-bottom: 2px solid #444;
+            padding-bottom: 10px;
+        }
+
+        .choices {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .choices button {
+            padding: 15px 20px;
+            font-size: 1rem;
+            border-radius: 5px;
+            border: none;
+            background: #222;
+            color: #f0f0f0;
+            cursor: pointer;
+            transition: transform 0.2s, background 0.2s;
+        }
+
+        .choices button:hover {
+            background: #333;
+            transform: scale(1.1);
+        }
+
+        .results {
+            margin-top: 10px;
+        }
+
+        .results p {
+            margin: 10px 0;
+            font-size: 1.1rem;
+        }
+
+        .highlight {
+            color: #00ff00;
+            font-weight: bold;
+        }
+
+        .scoreboard {
+            margin-top: 20px;
+            font-size: 1.1rem;
+        }
+
+        .scoreboard span {
+            font-weight: bold;
+            margin: 0 10px;
+        }
+
+        #resetBtn {
+            margin-top: 15px;
+            padding: 10px 20px;
+            font-size: 1rem;
+            border-radius: 5px;
+            border: none;
+            background: #222;
+            color: #f0f0f0;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.2s;
+        }
+
+        #resetBtn:hover {
+            background: #333;
+            transform: scale(1.05);
+        }
+
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            padding: 10px 15px;
+            background: #333;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s;
+            z-index: 1000;
+            /* stays on top of everything */
+        }
+
+        .back-btn:hover {
+            background: #555;
+        }
+    </style>
+</head>
+
+<body>
+
+    <a href="../projects.html" class="back-btn">← Back to Projects</a>
+
+    <div class="game-container">
+        <h1>Rock-Paper-Scissors</h1>
+        <div class="choices">
+            <button id="rockBtn">Rock</button>
+            <button id="paperBtn">Paper</button>
+            <button id="scissorsBtn">Scissors</button>
+        </div>
+        <div class="results">
+            <p id="playerChoice">Your Choice: -</p>
+            <p id="computerChoice">Computer's Choice: -</p>
+            <p id="winner">Winner: -</p>
+        </div>
+        <div class="scoreboard">
+            <p>Score: You <span id="playerScore">0</span> - <span id="computerScore">0</span> Computer</p>
+        </div>
+        <button id="resetBtn" onclick="resetGame()">Reset Game</button>
+    </div>
+
+    <script>
+        let playerScore = 0;
+        let computerScore = 0;
+
+        const choicesButtons = document.querySelectorAll(".choices button");
+
+        choicesButtons.forEach(btn => {
+            btn.addEventListener("click", () => play(btn.id.replace("Btn", "").toLowerCase()));
+        });
+
+        function play(playerChoice) {
+            const choices = ['rock', 'paper', 'scissors'];
+            const computerChoice = choices[Math.floor(Math.random() * choices.length)];
+
+            const playerEl = document.getElementById('playerChoice');
+            const computerEl = document.getElementById('computerChoice');
+            const winnerEl = document.getElementById('winner');
+
+            playerEl.textContent = `Your Choice: ${capitalize(playerChoice)}`;
+            computerEl.textContent = `Computer's Choice: ${capitalize(computerChoice)}`;
+
+            // Reset highlights
+            playerEl.classList.remove("highlight");
+            computerEl.classList.remove("highlight");
+
+            let winnerText = '';
+            if (playerChoice === computerChoice) {
+                winnerText = "It's a tie!";
+            } else if (
+                (playerChoice === 'rock' && computerChoice === 'scissors') ||
+                (playerChoice === 'paper' && computerChoice === 'rock') ||
+                (playerChoice === 'scissors' && computerChoice === 'paper')
+            ) {
+                winnerText = "You win!";
+                playerScore++;
+                playerEl.classList.add("highlight");
+            } else {
+                winnerText = "Computer wins!";
+                computerScore++;
+                computerEl.classList.add("highlight");
+            }
+
+            winnerEl.textContent = `Winner: ${winnerText}`;
+            document.getElementById('playerScore').textContent = playerScore;
+            document.getElementById('computerScore').textContent = computerScore;
+
+            // Animate choices
+            choicesButtons.forEach(btn => {
+                btn.style.transform = "scale(1)";
+            });
+            document.getElementById(playerChoice + "Btn").style.transform = "scale(1.2)";
+        }
+
+        function resetGame() {
+            playerScore = 0;
+            computerScore = 0;
+            document.getElementById('playerScore').textContent = playerScore;
+            document.getElementById('computerScore').textContent = computerScore;
+            document.getElementById('playerChoice').textContent = "Your Choice: -";
+            document.getElementById('computerChoice').textContent = "Computer's Choice: -";
+            document.getElementById('winner').textContent = "Winner: -";
+            document.getElementById('playerChoice').classList.remove("highlight");
+            document.getElementById('computerChoice').classList.remove("highlight");
+            choicesButtons.forEach(btn => btn.style.transform = "scale(1)");
+        }
+
+        function capitalize(str) {
+            return str.charAt(0).toUpperCase() + str.slice(1);
+        }
+    </script>
+
+</body>
+
+</html>

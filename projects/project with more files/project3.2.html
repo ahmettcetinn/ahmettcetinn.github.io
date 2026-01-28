@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Result</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: #111;
+            color: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .result-box {
+            text-align: center;
+            background: #1a1a1a;
+            padding: 40px;
+            border-radius: 8px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 12px 20px;
+            background: #222;
+            border: none;
+            color: #f0f0f0;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background 0.2s;
+        }
+
+        button:hover {
+            background: #333;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="result-box">
+        <h1>Your Score</h1>
+        <p id="final-score"></p>
+        <button onclick="restart()">Play Again</button>
+    </div>
+
+    <script>
+        let score = localStorage.getItem("quizScore") || 0;
+        document.getElementById("final-score").textContent = score;
+        function restart() {
+            window.location.href = "project3.html";
+        }
+    </script>
+</body>
+
+</html>

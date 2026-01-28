@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hangman Game</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: #111;
+            color: #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        h1 {
+            margin-bottom: 10px;
+            text-align: center;
+            border-bottom: 2px solid #444;
+            padding-bottom: 10px;
+        }
+
+        .category-container {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .category-container h2 {
+            margin-bottom: 10px;
+        }
+
+        .category-navbar {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .category-navbar button {
+            padding: 10px 15px;
+            font-size: 1rem;
+            border-radius: 5px;
+            border: none;
+            background: #222;
+            color: #f0f0f0;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .category-navbar button:hover {
+            background: #333;
+        }
+
+        .category-navbar button.active {
+            box-shadow: 0 0 10px #00ff00;
+            background: #111;
+            color: #00ff00;
+        }
+
+        #wordDisplay {
+            font-size: 2rem;
+            letter-spacing: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .letters {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 5px;
+            margin-bottom: 20px;
+        }
+
+        .letters button {
+            padding: 10px 15px;
+            font-size: 1rem;
+            border-radius: 5px;
+            border: none;
+            background: #222;
+            color: #f0f0f0;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .letters button:disabled {
+            background: #555;
+            color: #999;
+            cursor: not-allowed;
+        }
+
+        #hangmanVisual {
+            white-space: pre;
+            font-family: monospace;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        #restartBtn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background: #222;
+            color: #f0f0f0;
+            cursor: pointer;
+        }
+
+        #restartBtn:hover {
+            background: #333;
+        }
+
+        .popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            background: #1a1a1a;
+            border: 2px solid #00ff00;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            color: #f0f0f0;
+            z-index: 1000;
+            transition: transform 0.3s;
+        }
+
+        .popup.show {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .popup button {
+            margin-top: 15px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background: #222;
+            color: #f0f0f0;
+            cursor: pointer;
+        }
+
+        .popup button:hover {
+            background: #333;
+        }
+
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            padding: 10px 15px;
+            background: #333;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s;
+            z-index: 1000;
+            /* stays on top of everything */
+        }
+
+        .back-btn:hover {
+            background: #555;
+        }
+    </style>
+</head>
+
+<body>
+
+    <a href="../projects.html" class="back-btn">← Back to Projects</a>
+
+    <h1>Hangman Game</h1>
+
+    <div class="category-container">
+        <h2>Choose Category:</h2>
+        <div class="category-navbar" id="categoryNavbar">
+            <button data-category="fruits" class="active">Fruits</button>
+            <button data-category="animals">Animals</button>
+            <button data-category="countries">Countries</button>
+            <button data-category="sports">Sports</button>
+            <button data-category="colors">Colors</button>
+            <button data-category="movies">Movies</button>
+        </div>
+    </div>
+
+    <div id="hangmanVisual"></div>
+    <div id="wordDisplay">_ _ _ _ _</div>
+    <div class="letters" id="letters"></div>
+    <button id="restartBtn" onclick="restartGame()">Restart Game</button>
+
+    <div class="popup" id="endPopup">
+        <h2 id="endTitle">You Won!</h2>
+        <p id="endMessage"></p>
+        <button onclick="closePopup()">Close</button>
+    </div>
+
+    <script>
+        const categories = {
+            fruits: ['APPLE', 'BANANA', 'CHERRY', 'ORANGE', 'PINEAPPLE', 'MANGO', 'STRAWBERRY', 'WATERMELON', 'BLUEBERRY', 'KIWI'],
+            animals: ['ELEPHANT', 'TIGER', 'MONKEY', 'GIRAFFE', 'DOLPHIN', 'CROCODILE', 'KANGAROO', 'HIPPOPOTAMUS', 'LION', 'PANDA'],
+            countries: ['NETHERLANDS', 'GERMANY', 'FRANCE', 'CANADA', 'BRAZIL', 'JAPAN', 'AUSTRALIA', 'MEXICO', 'ITALY', 'SWEDEN'],
+            sports: ['FOOTBALL', 'BASKETBALL', 'BASEBALL', 'TENNIS', 'CRICKET', 'SWIMMING', 'HOCKEY', 'BOXING', 'VOLLEYBALL', 'SQUASH'],
+            colors: ['RED', 'BLUE', 'GREEN', 'YELLOW', 'ORANGE', 'PURPLE', 'PINK', 'BROWN', 'BLACK', 'WHITE'],
+            movies: ['INCEPTION', 'AVATAR', 'TITANIC', 'GLADIATOR', 'JOKER', 'INTERSTELLAR', 'MATRIX', 'BATMAN', 'SPIDERMAN', 'GODFATHER']
+        };
+
+        const maxWrong = 6;
+        let chosenWord = '';
+        let displayedWord = [];
+        let wrongGuesses = 0;
+        let currentCategory = 'fruits';
+
+        const wordDisplay = document.getElementById('wordDisplay');
+        const lettersContainer = document.getElementById('letters');
+        const hangmanVisual = document.getElementById('hangmanVisual');
+        const categoryNavbar = document.getElementById('categoryNavbar');
+        const endPopup = document.getElementById('endPopup');
+        const endTitle = document.getElementById('endTitle');
+        const endMessage = document.getElementById('endMessage');
+
+        const hangmanStates = [
+            ` 
+ +---+
+ |   |
+     |
+     |
+     |
+     |
+=========`,
+            `
+ +---+
+ |   |
+ O   |
+     |
+     |
+     |
+=========`,
+            `
+ +---+
+ |   |
+ O   |
+ |   |
+     |
+     |
+=========`,
+            `
+ +---+
+ |   |
+ O   |
+/|   |
+     |
+     |
+=========`,
+            `
+ +---+
+ |   |
+ O   |
+/|\\  |
+     |
+     |
+=========`,
+            `
+ +---+
+ |   |
+ O   |
+/|\\  |
+/    |
+     |
+=========`,
+            `
+ +---+
+ |   |
+ O   |
+/|\\  |
+/ \\  |
+     |
+=========`
+        ];
+
+        // CATEGORY NAVBAR CLICK
+        categoryNavbar.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('click', () => {
+                // remove active class from all buttons
+                categoryNavbar.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+                // set this button active
+                btn.classList.add('active');
+                // set category and restart
+                currentCategory = btn.dataset.category;
+                restartGame();
+            });
+        });
+
+        // Initialize game
+        function startGame() {
+            const words = categories[currentCategory];
+            chosenWord = words[Math.floor(Math.random() * words.length)];
+            displayedWord = Array(chosenWord.length).fill('_');
+            wrongGuesses = 0;
+            updateDisplay();
+            createLetterButtons();
+            updateHangman();
+        }
+
+        // Update word display
+        function updateDisplay() {
+            wordDisplay.textContent = displayedWord.join(' ');
+        }
+
+        // Update hangman visual
+        function updateHangman() {
+            hangmanVisual.textContent = hangmanStates[wrongGuesses];
+        }
+
+        // Create letter buttons
+        function createLetterButtons() {
+            lettersContainer.innerHTML = '';
+            for (let i = 65; i <= 90; i++) {
+                const letter = String.fromCharCode(i);
+                const btn = document.createElement('button');
+                btn.textContent = letter;
+                btn.addEventListener('click', () => guessLetter(letter, btn));
+                lettersContainer.appendChild(btn);
+            }
+        }
+
+        // Guess letter
+        function guessLetter(letter, btn) {
+            btn.disabled = true;
+            if (chosenWord.includes(letter)) {
+                for (let i = 0; i < chosenWord.length; i++) {
+                    if (chosenWord[i] === letter) displayedWord[i] = letter;
+                }
+                updateDisplay();
+                checkWin();
+            } else {
+                wrongGuesses++;
+                updateHangman();
+                checkLose();
+            }
+        }
+
+        // Check win
+        function checkWin() {
+            if (displayedWord.join('') === chosenWord) {
+                showPopup('You Won!', `The word was "${chosenWord}"`);
+            }
+        }
+
+        // Check lose
+        function checkLose() {
+            if (wrongGuesses >= maxWrong) {
+                showPopup('You Lost!', `The word was "${chosenWord}"`);
+            }
+        }
+
+        // Restart
+        function restartGame() {
+            startGame();
+            endPopup.classList.remove('show');
+        }
+
+        // Popup
+        function showPopup(title, message) {
+            endTitle.textContent = title;
+            endMessage.textContent = message;
+            endPopup.classList.add('show');
+        }
+        function closePopup() {
+            endPopup.classList.remove('show');
+        }
+
+        // Start game
+        startGame();
+    </script>
+</body>
+
+</html>
