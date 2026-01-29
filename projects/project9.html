@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMI Calculator</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: #111;
+            color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding-top: 50px;
+            min-height: 100vh;
+        }
+
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            padding: 10px 15px;
+            background: #333;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s;
+            z-index: 1000;
+        }
+
+        .back-btn:hover {
+            background: #555;
+        }
+
+        .container {
+            background: #1a1a1a;
+            padding: 30px;
+            border-radius: 8px;
+            width: 380px;
+            text-align: center;
+        }
+
+        h1 {
+            border-bottom: 2px solid #444;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        input,
+        select {
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            border: none;
+            background: #222;
+            color: #f0f0f0;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        button {
+            padding: 10px 15px;
+            border: none;
+            background: #222;
+            color: #f0f0f0;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+
+        button:hover {
+            background: #333;
+        }
+
+        #result {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            text-align: left;
+        }
+
+        #gaugeContainer {
+            margin-top: 15px;
+            height: 20px;
+            width: 100%;
+            background: #222;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        #gauge {
+            height: 100%;
+            width: 0%;
+            background: #4caf50;
+            transition: width 1s, background 1s;
+        }
+    </style>
+</head>
+
+<body>
+
+    <a href="../projects.html" class="back-btn">← Back to Projects</a>
+
+    <div class="container">
+        <h1>BMI Calculator</h1>
+
+        <select id="unit">
+            <option value="metric">Metric (kg/cm)</option>
+            <option value="imperial">Imperial (lbs/inches)</option>
+        </select>
+
+        <input type="number" id="weight" placeholder="Weight" min="0">
+        <input type="number" id="height" placeholder="Height" min="0">
+
+        <button onclick="calculateBMI()">Calculate BMI</button>
+
+        <div id="result">-</div>
+        <div id="gaugeContainer">
+            <div id="gauge"></div>
+        </div>
+    </div>
+
+    <script>
+        function calculateBMI() {
+            const unit = document.getElementById("unit").value;
+            let weight = parseFloat(document.getElementById("weight").value);
+            let height = parseFloat(document.getElementById("height").value);
+
+            if (!weight || !height) {
+                document.getElementById("result").textContent = "Enter valid numbers!";
+                document.getElementById("gauge").style.width = "0%";
+                return;
+            }
+
+            if (unit === "imperial") {
+                weight = weight * 0.453592;
+                height = height * 2.54;
+            }
+
+            const heightM = height / 100;
+            const bmi = (weight / (heightM * heightM)).toFixed(1);
+
+            let category = '', color = '', risk = '', advice = '';
+
+            if (bmi < 18.5) {
+                category = 'Underweight'; color = '#2196F3';
+                risk = 'Higher risk of malnutrition and osteoporosis.';
+                advice = 'Increase calorie intake, eat nutrient-rich foods, consider strength training.';
+            } else if (bmi < 25) {
+                category = 'Normal weight'; color = '#4CAF50';
+                risk = 'Low health risk.';
+                advice = 'Maintain healthy diet and regular exercise.';
+            } else if (bmi < 30) {
+                category = 'Overweight'; color = '#FFC107';
+                risk = 'Increased risk of heart disease, diabetes, high blood pressure.';
+                advice = 'Adopt balanced diet, increase physical activity.';
+            } else {
+                category = 'Obese'; color = '#F44336';
+                risk = 'High risk of serious health problems.';
+                advice = 'Consult healthcare professional, consider lifestyle changes.';
+            }
+
+            const minNormal = (18.5 * heightM * heightM).toFixed(1);
+            const maxNormal = (24.9 * heightM * heightM).toFixed(1);
+
+            document.getElementById("result").innerHTML = `
+        BMI: <strong>${bmi}</strong> (${category})<br>
+        Target weight range: <strong>${minNormal} - ${maxNormal} kg</strong><br>
+        Health risk: ${risk}<br>
+        Advice: ${advice}
+    `;
+
+            const gaugePercent = Math.min((bmi / 40) * 100, 100);
+            const gauge = document.getElementById("gauge");
+            gauge.style.width = gaugePercent + "%";
+            gauge.style.background = color;
+        }
+    </script>
+
+</body>
+
+</html>

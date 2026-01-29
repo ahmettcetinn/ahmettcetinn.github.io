@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dutch Celebration Countdown</title>
+    <title>global celebrations Countdown</title>
     <style>
         body {
             margin: 0;
@@ -86,7 +86,6 @@
             border-radius: 5px;
             transition: background 0.3s;
             z-index: 1000;
-            /* stays on top of everything */
         }
 
         .back-btn:hover {
@@ -100,23 +99,35 @@
     <a href="../projects.html" class="back-btn">← Back to Projects</a>
 
     <div class="countdown-container">
-        <h1>Dutch Celebration Countdown</h1>
+        <h1>global celebrations Countdown</h1>
         <div class="events" id="eventsContainer"></div>
     </div>
 
     <script>
         const eventsList = [
             { name: "New Year's Day", date: "January 1" },
+            { name: "Chinese New Year", date: "February 10" },
             { name: "Valentine's Day", date: "February 14" },
+            { name: "International Women's Day", date: "March 8" },
+            { name: "Holi (Festival of Colors)", date: "March 25" },
+            { name: "April Fool's Day", date: "April 1" },
             { name: "Easter Sunday", date: "April 9" },
-            { name: "King's Day", date: "April 27" },
-            { name: "Liberation Day", date: "May 5" },
-            { name: "Pentecost / Whit Sunday", date: "May 19" },
+            { name: "Earth Day", date: "April 22" },
+            { name: "Labor Day (International)", date: "May 1" },
+            { name: "Mother's Day", date: "May 14" },
+            { name: "Father's Day", date: "June 18" },
             { name: "Halloween", date: "October 31" },
-            { name: "Sinterklaas", date: "December 5" },
+            { name: "Diwali", date: "November 1" },
+            { name: "Guy Fawkes Night", date: "November 5" },
+            { name: "Thanksgiving (USA)", date: "November 28" },
+            { name: "International Day of Peace", date: "September 21" },
+            { name: "Hanukkah", date: "December 7" },
             { name: "Christmas Day", date: "December 25" },
-            { name: "Second Christmas Day", date: "December 26" }
+            { name: "Boxing Day", date: "December 26" },
+            { name: "New Year's Eve", date: "December 31" }
         ];
+
+
 
         const eventsContainer = document.getElementById("eventsContainer");
 

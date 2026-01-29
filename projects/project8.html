@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Changer</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: #111;
+            color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding-top: 50px;
+            min-height: 100vh;
+        }
+
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            padding: 10px 15px;
+            background: #333;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s;
+            z-index: 1000;
+        }
+
+        .back-btn:hover {
+            background: #555;
+        }
+
+        .container {
+            background: #1a1a1a;
+            padding: 30px;
+            border-radius: 8px;
+            width: 350px;
+            text-align: center;
+        }
+
+        h1 {
+            border-bottom: 2px solid #444;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 10px 15px;
+            border: none;
+            background: #222;
+            color: #f0f0f0;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background 0.2s;
+            margin: 5px;
+        }
+
+        button:hover {
+            background: #333;
+        }
+
+        #colorDisplay {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            user-select: all;
+        }
+    </style>
+</head>
+
+<body>
+
+    <a href="../projects.html" class="back-btn">← Back to Projects</a>
+
+    <div class="container">
+        <h1>Random Background</h1>
+        <button onclick="changeColor()">Change Color</button>
+        <button onclick="copyColor()">Copy Color</button>
+        <div id="colorDisplay">#111111</div>
+    </div>
+
+    <script>
+        function getRandomColor() {
+            const hex = Math.floor(Math.random() * 0xffffff).toString(16);
+            return `#${hex.padStart(6, '0')}`;
+        }
+
+        function changeColor() {
+            const color = getRandomColor();
+            document.body.style.background = color;
+            document.getElementById("colorDisplay").textContent = color;
+        }
+
+        function copyColor() {
+            const color = document.getElementById("colorDisplay").textContent;
+            navigator.clipboard.writeText(color).then(() => {
+                alert(`Copied ${color} to clipboard!`);
+            }).catch(err => {
+                alert('Failed to copy color.');
+                console.error(err);
+            });
+        }
+    </script>
+
+</body>
+
+</html>

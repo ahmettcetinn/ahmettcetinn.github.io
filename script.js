@@ -82,26 +82,51 @@ const projectDetails = {
         difficulty: "Beginner"
     },
     "Project 2": {
-        features: "Interactive gameplay; score tracking; simple animations.",
+        features: "Play Rock-Paper-Scissors against the computer with score tracking and animations.",
         difficulty: "Beginner"
     },
     "Project 3": {
-        features: "Multiple-choice questions; instant feedback; score calculation.",
+        features: "Multiple-choice quiz that checks answers in real-time and displays your final score.",
         difficulty: "Beginner–Intermediate"
     },
     "Project 4": {
-        features: "Card matching logic; timer; move counter; restart option.",
+        features: "Memory matching game with cards; tracks moves and time; option to restart anytime.",
         difficulty: "Beginner–Intermediate"
     },
     "Project 5": {
-        features: "Word guessing game; visual hangman progression; multiple word lists.",
+        features: "Hangman word-guessing game with hints, lives, and random words from multiple lists.",
         difficulty: "Intermediate"
     },
     "Project 6": {
-        features: "Live countdown; automatic next event; clean UI.",
+        features: "Countdown timer for upcoming Dutch holidays/events; automatically updates to the next event.",
+        difficulty: "Beginner–Intermediate"
+    },
+    "Project 7": {
+        features: "Interactive dice roller with animated rolling effect and a dynamic result display.",
+        difficulty: "Beginner"
+    },
+    "Project 8": {
+        features: "Random color generator with preview; copy colors to clipboard with one click.",
+        difficulty: "Beginner"
+    },
+    "Project 9": {
+        features: "BMI calculator: enter weight and height to calculate your BMI and see your weight category.",
+        difficulty: "Beginner"
+    },
+    "Project 10": {
+        features: "Temperature converter: convert values between Celsius and Fahrenheit easily and accurately.",
+        difficulty: "Beginner"
+    },
+    "Project 11": {
+        features: "Real-time digital clock showing hours, minutes, and seconds in a modern interface.",
+        difficulty: "Beginner"
+    },
+    "Project 12": {
+        features: "Password generator: create strong passwords with options for length, letters, numbers, and symbols.",
         difficulty: "Beginner–Intermediate"
     }
 };
+
 
 document.querySelectorAll(".details-btn").forEach(btn => {
     btn.addEventListener("click", () => {
