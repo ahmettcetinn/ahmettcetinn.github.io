@@ -1,5 +1,5 @@
       :root {
-          --bg1: #f8fafc;
+          --bg1: #ffffff;
           --bg2: #eef2ff;
           --card: #ffffff;
           --muted: #6b7280;
@@ -12,10 +12,7 @@
           box-sizing: border-box;
       }
 
-      html,
-      body {
-          height: 100%;
-      }
+
 
       body {
           margin: 0;
