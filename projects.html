@@ -6,121 +6,6 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Ahmet — Projects</title>
   <link rel="stylesheet" href="styles.css" />
-  <style>
-    .projects-main {
-      margin-top: 120px;
-      margin-bottom: 120px;
-    }
-
-    .projects-list {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 24px;
-      margin-top: 20px;
-    }
-
-    .projects-list .card {
-      background: #ffffff;
-      border-radius: 16px;
-      padding: 20px;
-      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .projects-list .card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.12);
-    }
-
-    .project-title {
-      font-size: 18px;
-      font-weight: 700;
-      margin-bottom: 10px;
-      color: #4f46e5;
-    }
-
-    .muted {
-      font-size: 14px;
-      color: #6b7280;
-      margin-bottom: 12px;
-    }
-
-    .cta-row {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-
-    .btn {
-      padding: 10px 16px;
-      border-radius: 12px;
-      font-weight: 600;
-      text-decoration: none;
-      text-align: center;
-      transition: all 0.2s ease;
-      cursor: pointer;
-    }
-
-    .btn:hover {
-      transform: scale(1.05);
-    }
-
-    .btn.outline {
-      background: transparent;
-      color: #4f46e5;
-      border: 2px solid #4f46e5;
-    }
-
-    .btn.outline:hover {
-      background: #4f46e5;
-      color: #fff;
-    }
-
-    .popup {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.5);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .popup.hidden {
-      display: none;
-    }
-
-    .popup-content {
-      max-width: 500px;
-      padding: 24px;
-      border-radius: 16px;
-      background: #fff;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-      position: relative;
-    }
-
-    #popup h2 {
-      color: #4f46e5;
-      margin-bottom: 16px;
-    }
-
-    #popupContent {
-      font-size: 14px;
-      color: #111827;
-      line-height: 1.6;
-    }
-
-    #closePopup {
-      position: absolute;
-      top: 16px;
-      right: 16px;
-    }
-
-    @media (max-width: 600px) {
-      .projects-list {
-        grid-template-columns: 1fr;
-      }
-    }
-  </style>
 </head>
 
 <body>
@@ -131,6 +16,19 @@
         <a href="index.html">Home</a>
         <a href="projects.html">Projects</a>
         <a href="contact.html">Contact</a>
+        <div class="nav-controls">
+          <div class="availability">
+            <span class="availability-dot"></span>
+            <span data-en="Open for opportunities" data-nl="Open voor kansen">Open for opportunities</span>
+          </div>
+          <div class="lang-switch">
+            <button class="lang-btn active" onclick="setLanguage('en')">EN</button>
+            <button class="lang-btn" onclick="setLanguage('nl')">NL</button>
+          </div>
+          <button class="theme-toggle" onclick="toggleTheme()">
+            <span id="theme-icon">🌙</span>
+          </button>
+        </div>
       </nav>
       <button class="mobile-toggle" id="menuBtn">☰</button>
     </div>
@@ -142,122 +40,158 @@
   </header>
 
   <main class="wrap projects-main">
-    <h1 id="projects">My Projects</h1>
+    <h1 class="scroll-hidden" data-en="My Projects" data-nl="Mijn Projecten">My Projects</h1>
     <div class="projects-list">
-      <article class="card">
-        <div class="project-title">Project 1 — TO-DO list</div>
-        <p class="muted">A simple to-do list where you can add, remove, and manage daily tasks.</p>
+      <article class="card scroll-hidden">
+        <div class="project-title">To-Do List</div>
+        <p class="muted"
+          data-en="A task management application with add, edit, delete, and completion functionality using localStorage."
+          data-nl="Een taak management applicatie met toevoegen, bewerken, verwijderen en voltooien functionaliteit met localStorage.">
+          A task management application with add, edit, delete, and completion functionality using localStorage.</p>
         <div class="cta-row">
-          <a class="btn" href="projects/project1.html">Open</a>
-          <button class="btn outline details-btn" data-project="Project 1">Details</button>
+          <a class="btn" href="projects/project1.html" data-en="View" data-nl="Bekijk">View</a>
+          <button class="btn outline details-btn" data-project="Project 1" data-en="Details"
+            data-nl="Details">Details</button>
         </div>
       </article>
 
-      <article class="card">
-        <div class="project-title">Project 2 — Rock-Paper-Scissors</div>
-        <p class="muted">A classic Rock-Paper-Scissors game where you play against the computer.</p>
+      <article class="card scroll-hidden delay-1">
+        <div class="project-title">Rock-Paper-Scissors</div>
+        <p class="muted" data-en="Classic game against computer with score tracking and interactive UI."
+          data-nl="Klassiek spel tegen computer met score bijhouden en interactieve UI.">Classic game against computer
+          with score tracking and interactive UI.</p>
         <div class="cta-row">
-          <a class="btn" href="projects/project2.html">Open</a>
-          <button class="btn outline details-btn" data-project="Project 2">Details</button>
+          <a class="btn" href="projects/project2.html" data-en="View" data-nl="Bekijk">View</a>
+          <button class="btn outline details-btn" data-project="Project 2" data-en="Details"
+            data-nl="Details">Details</button>
         </div>
       </article>
 
-      <article class="card">
-        <div class="project-title">Project 3 — Quiz</div>
-        <p class="muted">A multiple-choice quiz that checks your answers and shows your score at the end.</p>
+      <article class="card scroll-hidden delay-2">
+        <div class="project-title">Quiz Application</div>
+        <p class="muted" data-en="Multiple-choice quiz with real-time answer checking and final score display."
+          data-nl="Multiple-choice quiz met real-time antwoord controle en eindscore weergave.">Multiple-choice quiz
+          with real-time answer checking and final score display.</p>
         <div class="cta-row">
-          <a class="btn" href="projects/project with more files/project3.html">Open</a>
-          <button class="btn outline details-btn" data-project="Project 3">Details</button>
+          <a class="btn" href="projects/project with more files/project3.html" data-en="View" data-nl="Bekijk">View</a>
+          <button class="btn outline details-btn" data-project="Project 3" data-en="Details"
+            data-nl="Details">Details</button>
         </div>
       </article>
 
-      <article class="card">
-        <div class="project-title">Project 4 — Memory Matching Game</div>
-        <p class="muted">A card-matching game where you test your memory by finding all the pairs.</p>
+      <article class="card scroll-hidden delay-3">
+        <div class="project-title">Memory Matching Game</div>
+        <p class="muted" data-en="Card-matching game with move counter, timer, and restart functionality."
+          data-nl="Kaart-matching spel met zet teller, timer en restart functionaliteit.">Card-matching game with move
+          counter, timer, and restart functionality.</p>
         <div class="cta-row">
-          <a class="btn" href="projects/project4.html">Open</a>
-          <button class="btn outline details-btn" data-project="Project 4">Details</button>
+          <a class="btn" href="projects/project4.html" data-en="View" data-nl="Bekijk">View</a>
+          <button class="btn outline details-btn" data-project="Project 4" data-en="Details"
+            data-nl="Details">Details</button>
         </div>
       </article>
 
-      <article class="card">
-        <div class="project-title">Project 5 — Hangman</div>
-        <p class="muted">A Hangman word-guessing game with lives, hints, and random words.</p>
+      <article class="card scroll-hidden">
+        <div class="project-title">Hangman</div>
+        <p class="muted" data-en="Word-guessing game with hints, lives system, and randomized word selection."
+          data-nl="Woord-raden spel met hints, levens systeem en willekeurige woord selectie.">Word-guessing game with
+          hints, lives system, and randomized word selection.</p>
         <div class="cta-row">
-          <a class="btn" href="projects/project5.html">Open</a>
-          <button class="btn outline details-btn" data-project="Project 5">Details</button>
+          <a class="btn" href="projects/project5.html" data-en="View" data-nl="Bekijk">View</a>
+          <button class="btn outline details-btn" data-project="Project 5" data-en="Details"
+            data-nl="Details">Details</button>
         </div>
       </article>
 
-      <article class="card">
-        <div class="project-title">Project 6 — global celebrations Countdown</div>
-        <p class="muted">A countdown timer that shows how long until the next major global holiday or celebration.</p>
+      <article class="card scroll-hidden delay-1">
+        <div class="project-title">Global Celebrations Countdown</div>
+        <p class="muted" data-en="Countdown timer displaying time until upcoming holidays and celebrations."
+          data-nl="Afteltimer die tijd toont tot aankomende feestdagen en vieringen.">Countdown timer displaying time
+          until upcoming holidays and celebrations.</p>
         <div class="cta-row">
-          <a class="btn" href="projects/project6.html">Open</a>
-          <button class="btn outline details-btn" data-project="Project 6">Details</button>
+          <a class="btn" href="projects/project6.html" data-en="View" data-nl="Bekijk">View</a>
+          <button class="btn outline details-btn" data-project="Project 6" data-en="Details"
+            data-nl="Details">Details</button>
         </div>
       </article>
 
-      <article class="card">
-        <div class="project-title">Project 7 — Dice Roller</div>
-        <p class="muted">Roll a dice with an animated rolling effect and see the result in a fun interface.</p>
+      <article class="card scroll-hidden delay-2">
+        <div class="project-title">Dice Roller</div>
+        <p class="muted" data-en="Interactive dice rolling simulator with animation effects."
+          data-nl="Interactieve dobbelsteen simulator met animatie effecten.">Interactive dice rolling simulator with
+          animation effects.</p>
         <div class="cta-row">
-          <a class="btn" href="projects/project7.html">Open</a>
-          <button class="btn outline details-btn" data-project="Project 7">Details</button>
+          <a class="btn" href="projects/project7.html" data-en="View" data-nl="Bekijk">View</a>
+          <button class="btn outline details-btn" data-project="Project 7" data-en="Details"
+            data-nl="Details">Details</button>
         </div>
       </article>
 
-      <article class="card">
-        <div class="project-title">Project 8 — Color Picker / Random Background</div>
-        <p class="muted">Generate random colors, preview them, and copy hex codes easily with a single click.</p>
+      <article class="card scroll-hidden delay-3">
+        <div class="project-title">Color Picker</div>
+        <p class="muted" data-en="Random color generator with preview and hex code copying functionality."
+          data-nl="Willekeurige kleur generator met preview en hex code kopieer functionaliteit.">Random color generator
+          with preview and hex code copying functionality.</p>
         <div class="cta-row">
-          <a class="btn" href="projects/project8.html">Open</a>
-          <button class="btn outline details-btn" data-project="Project 8">Details</button>
+          <a class="btn" href="projects/project8.html" data-en="View" data-nl="Bekijk">View</a>
+          <button class="btn outline details-btn" data-project="Project 8" data-en="Details"
+            data-nl="Details">Details</button>
         </div>
       </article>
 
-      <article class="card">
-        <div class="project-title">Project 9 — BMI Calculator</div>
-        <p class="muted">Calculate your BMI and see your weight category with clear, interactive inputs.</p>
+      <article class="card scroll-hidden">
+        <div class="project-title">BMI Calculator</div>
+        <p class="muted" data-en="Health tool calculating Body Mass Index with weight category classification."
+          data-nl="Gezondheidstool die Body Mass Index berekent met gewicht categorie classificatie.">Health tool
+          calculating Body Mass Index with weight category classification.</p>
         <div class="cta-row">
-          <a class="btn" href="projects/project9.html">Open</a>
-          <button class="btn outline details-btn" data-project="Project 9">Details</button>
+          <a class="btn" href="projects/project9.html" data-en="View" data-nl="Bekijk">View</a>
+          <button class="btn outline details-btn" data-project="Project 9" data-en="Details"
+            data-nl="Details">Details</button>
         </div>
       </article>
 
-      <article class="card">
-        <div class="project-title">Project 10 — Temperature Converter</div>
-        <p class="muted">Convert temperatures between Celsius and Fahrenheit quickly and easily.</p>
+      <article class="card scroll-hidden delay-1">
+        <div class="project-title">Temperature Converter</div>
+        <p class="muted" data-en="Utility for converting between Celsius and Fahrenheit temperature scales."
+          data-nl="Tool voor het converteren tussen Celsius en Fahrenheit temperatuur schalen.">Utility for converting
+          between Celsius and Fahrenheit temperature scales.</p>
         <div class="cta-row">
-          <a class="btn" href="projects/project10.html">Open</a>
-          <button class="btn outline details-btn" data-project="Project 10">Details</button>
+          <a class="btn" href="projects/project10.html" data-en="View" data-nl="Bekijk">View</a>
+          <button class="btn outline details-btn" data-project="Project 10" data-en="Details"
+            data-nl="Details">Details</button>
         </div>
       </article>
 
-      <article class="card">
-        <div class="project-title">Project 11 — Digital Clock</div>
-        <p class="muted">View the current time in real-time with a stylish digital clock interface.</p>
+      <article class="card scroll-hidden delay-2">
+        <div class="project-title">Digital Clock</div>
+        <p class="muted" data-en="Real-time digital clock displaying current time with modern styling."
+          data-nl="Real-time digitale klok die huidige tijd toont met moderne styling.">Real-time digital clock
+          displaying current time with modern styling.</p>
         <div class="cta-row">
-          <a class="btn" href="projects/project11.html">Open</a>
-          <button class="btn outline details-btn" data-project="Project 11">Details</button>
+          <a class="btn" href="projects/project11.html" data-en="View" data-nl="Bekijk">View</a>
+          <button class="btn outline details-btn" data-project="Project 11" data-en="Details"
+            data-nl="Details">Details</button>
         </div>
       </article>
 
-      <article class="card">
-        <div class="project-title">Project 12 — Password Generator</div>
-        <p class="muted">Create secure passwords with custom length, character options, and a strength indicator.</p>
+      <article class="card scroll-hidden delay-3">
+        <div class="project-title">Password Generator</div>
+        <p class="muted" data-en="Secure password creation tool with customizable length and character options."
+          data-nl="Veilig wachtwoord creatie tool met aanpasbare lengte en karakter opties.">Secure password creation
+          tool with customizable length and character options.</p>
         <div class="cta-row">
-          <a class="btn" href="projects/project12.html">Open</a>
-          <button class="btn outline details-btn" data-project="Project 12">Details</button>
+          <a class="btn" href="projects/project12.html" data-en="View" data-nl="Bekijk">View</a>
+          <button class="btn outline details-btn" data-project="Project 12" data-en="Details"
+            data-nl="Details">Details</button>
         </div>
       </article>
-
     </div>
   </main>
 
   <div id="popup" class="popup hidden">
     <div class="popup-content">
-      <button id="closePopup" class="btn outline">X</button>
+      <button id="closePopup" class="btn outline">×</button>
       <h2 id="popupTitle"></h2>
       <div id="popupContent"></div>
     </div>
