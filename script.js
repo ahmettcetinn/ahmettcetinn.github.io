@@ -1,10 +1,11 @@
-// Wait for DOM to be fully loaded
+// Update this with your deployed Cloudflare Worker URL after running `wrangler deploy`
+const WORKER_URL = 'https://visitor-counter.YOUR_SUBDOMAIN.workers.dev';
+
 document.addEventListener('DOMContentLoaded', function () {
 
     // ===== DARK MODE =====
     const themeToggle = document.getElementById('theme-icon');
 
-    // Check for saved theme preference
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme === 'dark') {
         document.documentElement.setAttribute('data-theme', 'dark');
@@ -30,7 +31,6 @@ document.addEventListener('DOMContentLoaded', function () {
         currentLang = lang;
         localStorage.setItem('language', lang);
 
-        // Update buttons
         document.querySelectorAll('.lang-btn').forEach(btn => {
             btn.classList.remove('active');
             if (btn.textContent.toLowerCase() === lang) {
@@ -38,11 +38,9 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
 
-        // Update all elements with data attributes
         document.querySelectorAll('[data-en][data-nl]').forEach(el => {
             const text = el.getAttribute(`data-${lang}`);
             if (text) {
-                // Check if it's an input with placeholder
                 if (el.hasAttribute(`data-${lang}-placeholder`)) {
                     el.placeholder = el.getAttribute(`data-${lang}-placeholder`);
                 } else {
@@ -52,7 +50,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     };
 
-    // Initialize language
     setLanguage(currentLang);
 
     // ===== MOBILE MENU =====
@@ -62,7 +59,6 @@ document.addEventListener('DOMContentLoaded', function () {
     if (menuBtn && mobileMenu) {
         menuBtn.addEventListener('click', function () {
             mobileMenu.classList.toggle('active');
-            this.style.transform = mobileMenu.classList.contains('active') ? 'rotate(90deg)' : 'rotate(0deg)';
         });
     }
 
@@ -105,12 +101,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // ===== SCROLL ANIMATIONS =====
-    const observerOptions = {
-        root: null,
-        rootMargin: '0px',
-        threshold: 0.1
-    };
-
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -118,11 +108,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 observer.unobserve(entry.target);
             }
         });
-    }, observerOptions);
+    }, { root: null, rootMargin: '0px', threshold: 0.1 });
 
-    document.querySelectorAll('.scroll-hidden').forEach((el) => {
-        observer.observe(el);
-    });
+    document.querySelectorAll('.scroll-hidden').forEach(el => observer.observe(el));
 
     // ===== PROJECT DETAILS POPUP =====
     const projectDetails = {
@@ -212,16 +200,12 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     if (closePopupBtn) {
-        closePopupBtn.addEventListener('click', function () {
-            popup.classList.add('hidden');
-        });
+        closePopupBtn.addEventListener('click', () => popup.classList.add('hidden'));
     }
 
     if (popup) {
-        popup.addEventListener('click', function (e) {
-            if (e.target === popup) {
-                popup.classList.add('hidden');
-            }
+        popup.addEventListener('click', e => {
+            if (e.target === popup) popup.classList.add('hidden');
         });
     }
 
@@ -229,27 +213,43 @@ document.addEventListener('DOMContentLoaded', function () {
     document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
-            const targetId = this.getAttribute('href');
-            const target = document.querySelector(targetId);
-            if (target) {
-                target.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
         });
     });
 
-    // ===== FORM SUBMIT ANIMATION =====
-    const contactForm = document.querySelector('form.contact');
-    if (contactForm) {
-        contactForm.addEventListener('submit', function () {
-            const btn = this.querySelector('button[type="submit"]');
-            if (btn) {
-                btn.innerHTML = currentLang === 'nl' ? 'Versturen...' : 'Sending...';
-                btn.style.opacity = '0.7';
-            }
-        });
+    // ===== VISITOR COUNTER =====
+    // Only runs on pages that have the visitor badge element
+    const visitorBadge = document.getElementById('visitor-badge');
+    const visitorCountEl = document.getElementById('visitor-count');
+
+    if (visitorBadge && visitorCountEl && WORKER_URL && !WORKER_URL.includes('YOUR_SUBDOMAIN')) {
+        // Generate or retrieve a persistent visitor token
+        let token = localStorage.getItem('visitor_token');
+        if (!token) {
+            token = (typeof crypto.randomUUID === 'function')
+                ? crypto.randomUUID()
+                : Math.random().toString(36).slice(2) + Date.now().toString(36);
+            localStorage.setItem('visitor_token', token);
+        }
+
+        fetch(WORKER_URL + '/visit', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ token })
+        })
+            .then(r => r.json())
+            .then(data => {
+                if (typeof data.count === 'number') {
+                    visitorCountEl.textContent = data.count.toLocaleString();
+                    visitorBadge.style.display = 'inline-flex';
+                    // Re-apply language translation for sibling text node
+                    setLanguage(currentLang);
+                }
+            })
+            .catch(() => {
+                // Silent fail — counter is a nice-to-have, not critical
+            });
     }
 
 });

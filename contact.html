@@ -5,6 +5,9 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Ahmet — Contact</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css" />
 </head>
 
@@ -39,85 +42,54 @@
     </div>
   </header>
 
-  <main class="wrap contact-main">
+  <main class="contact-main">
     <h1 class="scroll-hidden" data-en="Get In Touch" data-nl="Neem Contact Op">Get In Touch</h1>
+    <p class="contact-tagline scroll-hidden delay-1"
+      data-en="The best way to reach me is by email. I typically respond within a day or two."
+      data-nl="De beste manier om mij te bereiken is via e-mail. Ik reageer doorgaans binnen één à twee dagen.">
+      The best way to reach me is by email. I typically respond within a day or two.
+    </p>
 
-    <div class="contact-grid">
-      <div class="contact-info scroll-hidden delay-2">
-        <h3 data-en="Contact Information" data-nl="Contact Informatie">Contact Information</h3>
+    <div class="contact-solo scroll-hidden delay-2">
+      <h3 data-en="Contact Information" data-nl="Contact Informatie">Contact Information</h3>
 
-        <div class="info-item">
-          <span class="info-icon">📧</span>
-          <div>
-            <strong data-en="Email" data-nl="Email">Email</strong>
-            <p>ahmetcetin2008@outlook.com</p>
-          </div>
-        </div>
-
-        <div class="info-item">
-          <span class="info-icon">📍</span>
-          <div>
-            <strong data-en="Location" data-nl="Locatie">Location</strong>
-            <p data-en="Netherlands" data-nl="Nederland">Netherlands</p>
-          </div>
-        </div>
-
-        <div class="info-item">
-          <span class="info-icon">💼</span>
-          <div>
-            <strong data-en="Availability" data-nl="Beschikbaarheid">Availability</strong>
-            <p data-en="Open for opportunities" data-nl="Open voor kansen">Open for opportunities</p>
-          </div>
-        </div>
-
-        <div class="social-links">
-          <h4 data-en="Find me on" data-nl="Vind me op">Find me on</h4>
-          <div class="social-icons">
-            <a href="https://github.com/ahmettcetinn" target="_blank" class="social-icon">GitHub</a>
-            <a href="https://www.linkedin.com/in/ahmet-cetin-b54674326/" target="_blank"
-              class="social-icon">LinkedIn</a>
-          </div>
+      <div class="info-item">
+        <span class="info-icon">📧</span>
+        <div>
+          <strong data-en="Email" data-nl="Email">Email</strong>
+          <a href="mailto:ahmetcetin2008@outlook.com">ahmetcetin2008@outlook.com</a>
         </div>
       </div>
 
-      <form action="https://api.web3forms.com/submit" method="POST" class="contact scroll-hidden delay-3">
-        <input type="hidden" name="access_key" value="1487bb27-6472-4d73-9845-772cd80a028c" />
-
-        <h3 data-en="Send a Message" data-nl="Stuur een Bericht">Send a Message</h3>
-
-        <div class="row">
-          <div>
-            <label for="name" data-en="Your Name" data-nl="Jouw Naam">Your Name</label>
-            <input id="name" name="name" type="text" placeholder="John Doe" required />
-          </div>
-          <div>
-            <label for="email" data-en="Your Email" data-nl="Jouw Email">Your Email</label>
-            <input id="email" name="email" type="email" placeholder="john@example.com" required />
-          </div>
-        </div>
-
+      <div class="info-item">
+        <span class="info-icon">📍</span>
         <div>
-          <label for="subject" data-en="Subject" data-nl="Onderwerp">Subject</label>
-          <input id="subject" name="subject" type="text" placeholder="Project collaboration" />
+          <strong data-en="Location" data-nl="Locatie">Location</strong>
+          <p data-en="Netherlands" data-nl="Nederland">Netherlands</p>
         </div>
+      </div>
 
+      <div class="info-item">
+        <span class="info-icon">💼</span>
         <div>
-          <label for="message" data-en="Your Message" data-nl="Jouw Bericht">Your Message</label>
-          <textarea id="message" name="message" rows="6" placeholder="Tell me about your project or question..."
-            data-en-placeholder="Tell me about your project or question..."
-            data-nl-placeholder="Vertel me over je project of vraag..." required></textarea>
+          <strong data-en="Availability" data-nl="Beschikbaarheid">Availability</strong>
+          <p data-en="Open for opportunities" data-nl="Open voor kansen">Open for opportunities</p>
         </div>
+      </div>
 
-        <div class="center">
-          <button type="submit" class="btn btn-large" data-en="Send Message →" data-nl="Verstuur Bericht →">Send Message
-            →</button>
+      <div class="social-links">
+        <h4 data-en="Find me on" data-nl="Vind me op">Find me on</h4>
+        <div class="social-icons">
+          <a href="https://github.com/ahmettcetinn" target="_blank" rel="noopener" class="social-icon">GitHub</a>
+          <a href="https://www.linkedin.com/in/ahmet-cetin-b54674326/" target="_blank" rel="noopener"
+            class="social-icon">LinkedIn</a>
         </div>
-      </form>
+      </div>
     </div>
   </main>
 
   <footer>
-    <div class="footer-inner">© Ahmet — Portfolio 2025</div>
+    <div class="footer-inner">© 2026 Ahmet — Portfolio</div>
   </footer>
 
   <script src="script.js"></script>
